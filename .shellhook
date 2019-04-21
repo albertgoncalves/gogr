@@ -16,7 +16,7 @@ if (( ! $? == 0 )); then
     go get -v github.com/fogleman/gg
 fi
 
-gofmts() {
+lint() {
     gofmt -w -s -e $1
     if (( $? == 0 )); then
         awk '{ gsub(/\t/, "    "); print }' < $1 > tmp
@@ -25,5 +25,5 @@ gofmts() {
     fi
 }
 
-export -f gofmts
+export -f lint
 export GOPATH=`pwd`
