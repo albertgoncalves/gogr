@@ -5,8 +5,8 @@ package main
 import (
     "fmt"
     "github.com/fogleman/gg"
-    "os"
     "math/rand"
+    "os"
 )
 
 func random() float64 {
