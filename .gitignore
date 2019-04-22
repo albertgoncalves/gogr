@@ -3,4 +3,6 @@
 !.shellhook
 !shell.nix
 !examples/
+!spline/
+!spline/src/
 !*.go
