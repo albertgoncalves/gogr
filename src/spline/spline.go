@@ -40,20 +40,20 @@ func copy2d(xs [][]float64) [][]float64 {
 }
 
 func interpolate(
-    degree,
+    degree int,
     domain,
-    d int,
+    d *int,
     low,
-    high,
+    high *float64,
     t float64,
     knots []float64,
     vs [][]float64,
 ) []float64 {
-    if (t < low) || (t > high) {
+    if (t < *low) || (t > *high) {
         return []float64{}
     }
     s := 0
-    for i := degree; i < domain; i++ {
+    for i := degree; i < *domain; i++ {
         if (t >= knots[i]) && (t <= knots[i+1]) {
             s = i
             break
@@ -64,14 +64,14 @@ func interpolate(
     for l := 1; l < (degree + 1); l++ {
         for i := s; i > (s - degree - 1 + l); i-- {
             alpha = (t - knots[i]) / (knots[i+degree+1-l] - knots[i])
-            for j := 0; j < (d + 1); j++ {
+            for j := 0; j < (*d + 1); j++ {
                 vs[i][j] = ((1 - alpha) * vs[i-1][j]) + (alpha * vs[i][j])
             }
         }
     }
-    y := make([]float64, d)
-    for i := 0; i < d; i++ {
-        y[i] = vs[s][i] / vs[s][d]
+    y := make([]float64, *d)
+    for i := 0; i < *d; i++ {
+        y[i] = vs[s][i] / vs[s][*d]
     }
     return y
 }
@@ -106,10 +106,10 @@ func Spline(points [][]float64, ts []float64) [][]float64 {
             for i, t := range ts {
                 ys[i] = interpolate(
                     degree,
-                    domain,
-                    d,
-                    low,
-                    high,
+                    &domain,
+                    &d,
+                    &low,
+                    &high,
                     t*(high-low)+low,
                     knots,
                     vs,
