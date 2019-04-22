@@ -1,5 +1,18 @@
 package spline
 
+func Ts(n int) []float64 {
+    ts := make([]float64, n+1)
+    for i := range ts {
+        if i == 0 {
+            ts[i] = 0
+        } else {
+            ts[i] = float64(i) / float64(n)
+        }
+    }
+    ts[n] = 1
+    return ts
+}
+
 func sameLens(d int, xs [][]float64) bool {
     for _, x := range xs {
         if len(x) != d {
@@ -15,19 +28,6 @@ func floatRange(min, max int) []float64 {
         a[i] = float64(min + i)
     }
     return a
-}
-
-func Ts(n int) []float64 {
-    ts := make([]float64, n+1)
-    for i := range ts {
-        if i == 0 {
-            ts[i] = 0
-        } else {
-            ts[i] = float64(i) / float64(n)
-        }
-    }
-    ts[n] = 1
-    return ts
 }
 
 func deBoor(degree, d, s int, t float64, knots []float64,

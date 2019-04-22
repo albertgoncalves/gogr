@@ -125,6 +125,40 @@ func TestSpline(t *testing.T) {
     }
 }
 
+func TestSplineUnevenDims(t *testing.T) {
+    points := [][]float64{
+        {-1.0, 0.0},
+        {-0.5},
+        {0.5, -0.5},
+        {1.0, 0.0},
+    }
+    ts := []float64{0.0, 0.5, 1.0}
+    result := Spline(points, ts)
+    if len(result) != 0 {
+        t.Errorf(
+            "Interpolate was incorrect, got: %v, wanted: %v",
+            result,
+            [][]float64{},
+        )
+    }
+}
+
+func TestSplineFewPoints(t *testing.T) {
+    points := [][]float64{
+        {-1.0, 0.0},
+        {1.0, 0.0},
+    }
+    ts := []float64{0.0, 0.5, 1.0}
+    result := Spline(points, ts)
+    if len(result) != 0 {
+        t.Errorf(
+            "Interpolate was incorrect, got: %v, wanted: %v",
+            result,
+            [][]float64{},
+        )
+    }
+}
+
 func BenchmarkSpline(b *testing.B) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
     points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
