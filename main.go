@@ -34,8 +34,11 @@ func lineToPoint(dc *gg.Context, point []float64) {
     }
 }
 
-func lineThruPoints(dc *gg.Context, f func(dc *gg.Context),
-    points [][]float64) {
+func lineThruPoints(
+    dc *gg.Context,
+    f func(dc *gg.Context),
+    points [][]float64,
+) {
     for _, point := range points {
         lineToPoint(dc, point)
     }
