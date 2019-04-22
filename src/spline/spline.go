@@ -60,10 +60,9 @@ func interpolate(
         }
     }
     vs = copy2d(vs)
-    var alpha float64
     for l := 1; l < (degree + 1); l++ {
         for i := s; i > (s - degree - 1 + l); i-- {
-            alpha = (t - knots[i]) / (knots[i+degree+1-l] - knots[i])
+            alpha := (t - knots[i]) / (knots[i+degree+1-l] - knots[i])
             for j := 0; j < (*d + 1); j++ {
                 vs[i][j] = ((1 - alpha) * vs[i-1][j]) + (alpha * vs[i][j])
             }
@@ -81,41 +80,39 @@ func Spline(points [][]float64, ts []float64) [][]float64 {
     n := len(points)
     if n <= degree {
         return [][]float64{}
-    } else {
-        d := len(points[0])
-        if !sameLens(d, points) {
-            return [][]float64{}
-        } else {
-            knots := floatRange(0, n+degree+1)
-            domain := len(knots) - 1 - degree
-            low := knots[degree]
-            high := knots[domain]
-            vs := make([][]float64, n)
-            for i := 0; i < n; i++ {
-                v := make([]float64, d+1)
-                for j := 0; j < (d + 1); j++ {
-                    if j < d {
-                        v[j] = points[i][j]
-                    } else {
-                        v[j] = 1
-                    }
-                }
-                vs[i] = v
-            }
-            ys := make([][]float64, len(ts))
-            for i, t := range ts {
-                ys[i] = interpolate(
-                    degree,
-                    &domain,
-                    &d,
-                    &low,
-                    &high,
-                    t*(high-low)+low,
-                    knots,
-                    vs,
-                )
-            }
-            return ys
-        }
     }
+    d := len(points[0])
+    if !sameLens(d, points) {
+        return [][]float64{}
+    }
+    knots := floatRange(0, n+degree+1)
+    domain := len(knots) - 1 - degree
+    low := knots[degree]
+    high := knots[domain]
+    vs := make([][]float64, n)
+    for i := 0; i < n; i++ {
+        v := make([]float64, d+1)
+        for j := 0; j < (d + 1); j++ {
+            if j < d {
+                v[j] = points[i][j]
+            } else {
+                v[j] = 1
+            }
+        }
+        vs[i] = v
+    }
+    ys := make([][]float64, len(ts))
+    for i, t := range ts {
+        ys[i] = interpolate(
+            degree,
+            &domain,
+            &d,
+            &low,
+            &high,
+            t*(high-low)+low,
+            knots,
+            vs,
+        )
+    }
+    return ys
 }
