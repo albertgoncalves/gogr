@@ -63,11 +63,10 @@ func TestFloatRange(t *testing.T) {
     }
 }
 
-func roundArray(xs []float64) []float64 {
+func roundArray(xs []float64) {
     for i := range xs {
         xs[i] = math.Round(xs[i]*100) / 100
     }
-    return xs
 }
 
 func TestInterpolateValid(t *testing.T) {
@@ -88,7 +87,7 @@ func TestInterpolateValid(t *testing.T) {
     }
     result := Interpolate(points, ts)
     for i := range ts {
-        result[i] = roundArray(result[i])
+        roundArray(result[i])
     }
     for i := range result {
         if !compareArrays(result[i], expected[i]) {
@@ -99,5 +98,13 @@ func TestInterpolateValid(t *testing.T) {
             )
             break
         }
+    }
+}
+
+func BenchmarkInterpolate(b *testing.B) {
+    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
+    for i := 0; i < b.N; i++ {
+        Interpolate(points, ts)
     }
 }
