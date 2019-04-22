@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 cd $1
-go test
 if [[ $2 = prof ]]; then
-    go test -cpuprofile cpu.prof -bench .
+    go test -memprofile mem.prof -cpuprofile cpu.prof -bench .
     go tool pprof --text cpu.prof | less
+    go tool pprof --text mem.prof | less
+else
+    go test
 fi
