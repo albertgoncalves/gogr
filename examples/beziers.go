@@ -59,11 +59,30 @@ func randomCubic(dc *gg.Context) {
     drawPoints(dc)
 }
 
+func lineToPoint(dc *gg.Context, point []float64) {
+    dc.LineTo(point[0], point[1])
+}
+
+func lineThruPoints(dc *gg.Context, points [][]float64) {
+    for _, point := range points {
+        lineToPoint(dc, point)
+    }
+    drawPoints(dc)
+}
+
+func randomPoints(n int) [][]float64 {
+    points := make([][]float64, n)
+    for i := range points {
+        points[i] = []float64{random(), random()}
+    }
+    return points
+}
+
 func main() {
     const (
         S = 256
-        W = 8
-        H = 8
+        W = 1
+        H = 1
     )
     dc := gg.NewContext(S*W, S*H)
     dc.SetRGB(1, 1, 1)
@@ -75,11 +94,14 @@ func main() {
             dc.Push()
             dc.Translate(x, y)
             dc.Scale(S/2, S/2)
-            if j%2 == 0 {
-                randomCubic(dc)
-            } else {
-                randomQuadratic(dc)
-            }
+            points := randomPoints(5)
+            fmt.Println(points)
+            lineThruPoints(dc, points)
+            // if j%2 == 0 {
+            //     randomCubic(dc)
+            // } else {
+            //     randomQuadratic(dc)
+            // }
             dc.Pop()
         }
     }
