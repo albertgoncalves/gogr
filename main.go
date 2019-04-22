@@ -29,7 +29,9 @@ func drawCurve(dc *gg.Context) {
 }
 
 func lineToPoint(dc *gg.Context, point []float64) {
-    dc.LineTo(point[0], point[1])
+    if len(point) > 1 {
+        dc.LineTo(point[0], point[1])
+    }
 }
 
 func lineThruPoints(dc *gg.Context, f func(dc *gg.Context),
