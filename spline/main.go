@@ -5,7 +5,7 @@ import (
     S "spline"
 )
 
-func main () {
+func main() {
     points := [][]float64{
         {-0.5, 5},
         {-2, 0},
@@ -19,5 +19,5 @@ func main () {
         {0, -2.75},
         {5, -5},
     }
-    fmt.Println(S.Interpolate(points, 0.5))
+    fmt.Println(S.Interpolate(points, []float64{0.0, 0.5, 1.0}))
 }

@@ -5,6 +5,18 @@ import (
     "testing"
 )
 
+func compareArrays(xs, ys []float64) bool {
+    if len(xs) != len(ys) {
+        return false
+    }
+    for i := range xs {
+        if xs[i] != ys[i] {
+            return false
+        }
+    }
+    return true
+}
+
 func TestSameLensTrue(t *testing.T) {
     var expected bool = true
     points := [][]float64{
@@ -53,19 +65,14 @@ func TestFloatRange(t *testing.T) {
 
 func roundArray(xs []float64) []float64 {
     for i := range xs {
-        xs[i] = math.Round(xs[i] * 100) / 100
+        xs[i] = math.Round(xs[i]*100) / 100
     }
     return xs
 }
 
 func TestInterpolateValid(t *testing.T) {
-    ts := [...]float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
-    points := [][]float64{
-        {-1.0, 0.0},
-        {-0.5, 0.5},
-        {0.5, -0.5},
-        {1.0, 0.0},
-    }
+    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
     expected := [][]float64{
         {-0.75, 0.25},
         {-0.64, 0.32},
@@ -79,17 +86,18 @@ func TestInterpolateValid(t *testing.T) {
         {0.64, -0.32},
         {0.75, -0.25},
     }
-    result := make([][]float64, len(ts))
-    for i, t := range ts {
-        result[i] = roundArray(Interpolate(points, t))
+    result := Interpolate(points, ts)
+    for i := range ts {
+        result[i] = roundArray(result[i])
     }
     for i := range result {
         if !compareArrays(result[i], expected[i]) {
             t.Errorf(
-                "interpolate was incorrect, got: %v, wanted: %v",
+                "Interpolate was incorrect, got: %v, wanted: %v",
                 result,
                 expected,
             )
+            break
         }
     }
 }
