@@ -2,4 +2,6 @@
 
 cd $1
 go test -cpuprofile cpu.prof -bench .
-go tool pprof --text cpu.prof | less
+if [[ $2 = prof ]]; then
+    go tool pprof --text cpu.prof | less
+fi
