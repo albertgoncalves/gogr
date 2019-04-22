@@ -63,6 +63,18 @@ func TestFloatRange(t *testing.T) {
     }
 }
 
+func TestTs(t *testing.T) {
+    expected := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    result := Ts(10)
+    if !compareArrays(result, expected) {
+        t.Errorf(
+            "ts was incorrect, got: %v, wanted: %v",
+            result,
+            expected,
+        )
+    }
+}
+
 func roundArray(xs []float64) {
     for i := range xs {
         xs[i] = math.Round(xs[i]*100) / 100
@@ -70,7 +82,7 @@ func roundArray(xs []float64) {
 }
 
 func TestSpline(t *testing.T) {
-    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    ts := Ts(10)
     points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
     expected := [][]float64{
         {-0.75, 0.25},

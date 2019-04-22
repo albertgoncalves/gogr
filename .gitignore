@@ -2,8 +2,9 @@
 !.gitignore
 !.shellhook
 !shell.nix
-!examples/
+!src/
 !spline/
-!spline/src/
-!spline/test
 !*.go
+!test
+!pngs/
+!main.png

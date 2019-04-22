@@ -17,6 +17,19 @@ func floatRange(min, max int) []float64 {
     return a
 }
 
+func Ts(n int) []float64 {
+    ts := make([]float64, n+1)
+    for i := range ts {
+        if i == 0 {
+            ts[i] = 0
+        } else {
+            ts[i] = float64(i) / float64(n)
+        }
+    }
+    ts[n] = 1
+    return ts
+}
+
 func deBoor(degree, d, s int, t float64, knots []float64,
     vs [][]float64) {
     var alpha float64
@@ -35,7 +48,7 @@ func interpolate(degree, domain, n, d int, low, high, t float64,
     if (t < low) || (t > high) {
         return []float64{}
     }
-    var s int
+    s := 0
     for i := degree; i < domain; i++ {
         if (t >= knots[i]) && (t <= knots[i+1]) {
             s = i
@@ -44,7 +57,7 @@ func interpolate(degree, domain, n, d int, low, high, t float64,
     }
     vs := make([][]float64, n)
     for i := 0; i < n; i++ {
-        var v = make([]float64, d+1)
+        v := make([]float64, d+1)
         for j := 0; j < (d + 1); j++ {
             if j < d {
                 v[j] = points[i][j]
