@@ -69,7 +69,7 @@ func roundArray(xs []float64) {
     }
 }
 
-func TestInterpolateValid(t *testing.T) {
+func TestSpline(t *testing.T) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
     points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
     expected := [][]float64{
@@ -85,7 +85,7 @@ func TestInterpolateValid(t *testing.T) {
         {0.64, -0.32},
         {0.75, -0.25},
     }
-    result := Interpolate(points, ts)
+    result := Spline(points, ts)
     for i := range ts {
         roundArray(result[i])
     }
@@ -101,10 +101,10 @@ func TestInterpolateValid(t *testing.T) {
     }
 }
 
-func BenchmarkInterpolate(b *testing.B) {
+func BenchmarkSpline(b *testing.B) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
     points := [][]float64{{-1.0, 0.0}, {-0.5, 0.5}, {0.5, -0.5}, {1.0, 0.0}}
     for i := 0; i < b.N; i++ {
-        Interpolate(points, ts)
+        Spline(points, ts)
     }
 }
