@@ -30,8 +30,14 @@ func floatRange(min, max int) []float64 {
     return a
 }
 
-func deBoor(degree, d, s int, t float64, knots []float64,
-    vs [][]float64) {
+func deBoor(
+    degree,
+    d,
+    s int,
+    t float64,
+    knots []float64,
+    vs [][]float64,
+) {
     var alpha float64
     for l := 1; l < (degree + 1); l++ {
         for i := s; i > (s - degree - 1 + l); i-- {
@@ -43,8 +49,17 @@ func deBoor(degree, d, s int, t float64, knots []float64,
     }
 }
 
-func interpolate(degree, domain, n, d int, low, high, t float64,
-    knots []float64, points [][]float64) []float64 {
+func interpolate(
+    degree,
+    domain,
+    n,
+    d int,
+    low,
+    high,
+    t float64,
+    knots []float64,
+    points [][]float64,
+) []float64 {
     if (t < low) || (t > high) {
         return []float64{}
     }
