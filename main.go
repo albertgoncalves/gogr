@@ -28,27 +28,22 @@ func drawCurve(dc *gg.Context) {
     dc.Stroke()
 }
 
-func lineToPoint(dc *gg.Context, point []float64) {
-    if len(point) > 1 {
-        dc.LineTo(point[0], point[1])
-    }
-}
-
 func lineThruPoints(
     dc *gg.Context,
     f func(dc *gg.Context),
-    points [][]float64,
+    points []float64,
+    n int,
 ) {
-    for _, point := range points {
-        lineToPoint(dc, point)
+    for i := 0; i < n; i++ {
+        dc.LineTo(points[i * 2], points[(i * 2) + 1])
     }
     f(dc)
 }
 
-func randomPoints(n int) [][]float64 {
-    points := make([][]float64, n)
+func randomPoints(n int) []float64 {
+    points := make([]float64, n * 2)
     for i := range points {
-        points[i] = []float64{random(), random()}
+        points[i] = random()
     }
     return points
 }
@@ -58,6 +53,7 @@ func main() {
         S = 256
         W = 6
         H = 6
+        M = 100
     )
     dc := gg.NewContext(S*W, S*H)
     dc.SetRGB(1, 1, 1)
@@ -71,11 +67,12 @@ func main() {
             dc.Scale(S/2, S/2)
             n := rand.Intn(4) + 3
             points := randomPoints(n)
-            lineThruPoints(dc, drawLines, points)
+            lineThruPoints(dc, drawLines, points, n)
             lineThruPoints(
                 dc,
                 drawCurve,
-                spline.Spline(points, spline.Ts(100)),
+                spline.Spline(points, n, 2, spline.Ts(M)),
+                M,
             )
             dc.Pop()
         }
