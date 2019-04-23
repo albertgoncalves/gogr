@@ -17,40 +17,6 @@ func compareArrays(xs, ys []float64) bool {
     return true
 }
 
-// func TestSameLensTrue(t *testing.T) {
-//     var expected bool = true
-//     points := [][]float64{
-//         {0.0, 1.0},
-//         {1.0, 0.5},
-//         {0.5, 0.75},
-//     }
-//     result := sameLens(len(points[0]), points)
-//     if !expected {
-//         t.Errorf(
-//             "sameLens was incorrect, got: %t, wanted: %t",
-//             result,
-//             expected,
-//         )
-//     }
-// }
-
-// func TestSameLensFalse(t *testing.T) {
-//     var expected bool = false
-//     points := [][]float64{
-//         {0.0, 1.0},
-//         {1.0, 0.5},
-//         {0.5},
-//     }
-//     result := sameLens(len(points[0]), points)
-//     if expected {
-//         t.Errorf(
-//             "sameLens was incorrect, got: %t, wanted: %t",
-//             result,
-//             expected,
-//         )
-//     }
-// }
-
 func TestFloatRange(t *testing.T) {
     expected := []float64{0, 1, 2, 3, 4, 5}
     result := floatRange(0, 6)
@@ -124,40 +90,6 @@ func TestSpline(t *testing.T) {
         )
     }
 }
-
-// func TestSplineUnevenDims(t *testing.T) {
-//     points := [][]float64{
-//         {-1.0, 0.0},
-//         {-0.5},
-//         {0.5, -0.5},
-//         {1.0, 0.0},
-//     }
-//     ts := []float64{0.0, 0.5, 1.0}
-//     result := Spline(points, ts)
-//     if len(result) != 0 {
-//         t.Errorf(
-//             "Interpolate was incorrect, got: %v, wanted: %v",
-//             result,
-//             [][]float64{},
-//         )
-//     }
-// }
-
-// func TestSplineFewPoints(t *testing.T) {
-//     points := [][]float64{
-//         {-1.0, 0.0},
-//         {1.0, 0.0},
-//     }
-//     ts := []float64{0.0, 0.5, 1.0}
-//     result := Spline(points, ts)
-//     if len(result) != 0 {
-//         t.Errorf(
-//             "Interpolate was incorrect, got: %v, wanted: %v",
-//             result,
-//             [][]float64{},
-//         )
-//     }
-// }
 
 func BenchmarkSpline(b *testing.B) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
