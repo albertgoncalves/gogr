@@ -32,16 +32,19 @@ func lineThruPoints(
     dc *gg.Context,
     f func(dc *gg.Context),
     points []float64,
-    n int,
 ) {
-    for i := 0; i < n; i++ {
-        dc.LineTo(points[i * 2], points[(i * 2) + 1])
+    var n int = len(points)
+    if (n >= 4) && (n%2 == 0) {
+        var m int = n / 2
+        for i := 0; i < m; i++ {
+            dc.LineTo(points[i*2], points[(i*2)+1])
+        }
+        f(dc)
     }
-    f(dc)
 }
 
 func randomPoints(n int) []float64 {
-    points := make([]float64, n * 2)
+    points := make([]float64, n*2)
     for i := range points {
         points[i] = random()
     }
@@ -67,12 +70,11 @@ func main() {
             dc.Scale(S/2, S/2)
             n := rand.Intn(4) + 3
             points := randomPoints(n)
-            lineThruPoints(dc, drawLines, points, n)
+            lineThruPoints(dc, drawLines, points)
             lineThruPoints(
                 dc,
                 drawCurve,
                 spline.Spline(points, n, 2, spline.Ts(M)),
-                M,
             )
             dc.Pop()
         }
