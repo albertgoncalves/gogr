@@ -76,7 +76,7 @@ func interpolate(
 }
 
 func Spline(points [][]float64, ts []float64) [][]float64 {
-    const degree int = 2
+    const degree = 2
     n := len(points)
     if n <= degree {
         return [][]float64{}
