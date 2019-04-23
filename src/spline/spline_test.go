@@ -91,6 +91,44 @@ func TestSpline(t *testing.T) {
     }
 }
 
+func TestSplineIncompletePoints(t *testing.T) {
+    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    points := []float64{
+        -1.0, 0.0,
+        -0.5, 0.5,
+        0.5, -0.5,
+        1.0,
+    }
+    expected := []float64{}
+    result := Spline(points, 4, 2, ts)
+    roundArray(result)
+    if !compareArrays(result, expected) {
+        t.Errorf(
+            "Interpolate was incorrect, got: %v, wanted: %v",
+            result,
+            expected,
+        )
+    }
+}
+
+func TestSplineFewPoints(t *testing.T) {
+    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    points := []float64{
+        -1.0, 0.0,
+        -0.5, 0.5,
+    }
+    expected := []float64{}
+    result := Spline(points, 2, 2, ts)
+    roundArray(result)
+    if !compareArrays(result, expected) {
+        t.Errorf(
+            "Interpolate was incorrect, got: %v, wanted: %v",
+            result,
+            expected,
+        )
+    }
+}
+
 func BenchmarkSpline(b *testing.B) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
     points := []float64{-1.0, 0.0, -0.5, 0.5, 0.5, -0.5, 1.0, 0.0}
