@@ -15,16 +15,16 @@ func random() float64 {
 }
 
 func drawLines(dc *gg.Context) {
-    dc.SetRGBA(1, 0, 0, 0.5)
-    dc.SetLineWidth(2)
+    dc.SetRGBA(0, 0, 0, 0.25)
+    dc.SetLineWidth(1)
     dc.Stroke()
 }
 
 func drawCurve(dc *gg.Context) {
-    dc.SetRGBA(0, 0, 0, 0.1)
+    dc.SetRGBA(0, 0, 0, 0.035)
     dc.FillPreserve()
     dc.SetRGB(0, 0, 0)
-    dc.SetLineWidth(3)
+    dc.SetLineWidth(2)
     dc.Stroke()
 }
 
@@ -52,10 +52,11 @@ func randomPoints(n int) []float64 {
 }
 
 func main() {
+    rand.Seed(3)
     const (
         S = 256
-        W = 6
-        H = 6
+        W = 8
+        H = 8
         M = 100
     )
     dc := gg.NewContext(S*W, S*H)
@@ -68,7 +69,7 @@ func main() {
             dc.Push()
             dc.Translate(x, y)
             dc.Scale(S/2, S/2)
-            n := rand.Intn(4) + 3
+            n := rand.Intn(3) + 4
             points := randomPoints(n)
             lineThruPoints(dc, drawLines, points)
             lineThruPoints(
