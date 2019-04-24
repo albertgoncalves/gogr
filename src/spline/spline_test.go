@@ -5,12 +5,18 @@ import (
     "testing"
 )
 
+func roundArray(xs []float64) {
+    for i := range xs {
+        xs[i] = math.Round(xs[i]*100) / 100
+    }
+}
+
 func compareArrays(xs, ys []float64) bool {
     if len(xs) != len(ys) {
         return false
     }
-    for i := range xs {
-        if xs[i] != ys[i] {
+    for i, x := range xs {
+        if x != ys[i] {
             return false
         }
     }
@@ -34,20 +40,15 @@ func TestTs(t *testing.T) {
     result := Ts(10)
     if !compareArrays(result, expected) {
         t.Errorf(
-            "ts was incorrect, got: %v, wanted: %v",
+            "TestTs\n"+
+                "Ts(10)\nresult:\n\t%g\nexpected:\n\t%g\n\n",
             result,
             expected,
         )
     }
 }
 
-func roundArray(xs []float64) {
-    for i := range xs {
-        xs[i] = math.Round(xs[i]*100) / 100
-    }
-}
-
-func TestSpline(t *testing.T) {
+func TestSplineValid(t *testing.T) {
     ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
     points := []float64{
         -1.0, 0.0,
@@ -72,7 +73,8 @@ func TestSpline(t *testing.T) {
     roundArray(result)
     if !compareArrays(result, expected) {
         t.Errorf(
-            "Interpolate was incorrect, got: %v, wanted: %v",
+            "TestSplineValid\n"+
+                "Spline(points, 4, 2, ts)\nresult:\n\t%g\nexpected:\n\t%g\n\n",
             result,
             expected,
         )
@@ -89,10 +91,10 @@ func TestSplineIncompletePoints(t *testing.T) {
     }
     expected := []float64{}
     result := Spline(points, 4, 2, ts)
-    roundArray(result)
     if !compareArrays(result, expected) {
         t.Errorf(
-            "Interpolate was incorrect, got: %v, wanted: %v",
+            "TestSplineIncompletePoints\n"+
+                "Spline(points, 4, 2, ts)\nresult:\n\t%g\nexpected:\n\t%g\n\n",
             result,
             expected,
         )
@@ -107,10 +109,10 @@ func TestSplineFewPoints(t *testing.T) {
     }
     expected := []float64{}
     result := Spline(points, 2, 2, ts)
-    roundArray(result)
     if !compareArrays(result, expected) {
         t.Errorf(
-            "Interpolate was incorrect, got: %v, wanted: %v",
+            "TestSplineFewPoints\n"+
+                "Spline(points, 2, 2, ts)\nresult:\n\t%g\nexpected:\n\t%g\n\n",
             result,
             expected,
         )
