@@ -13,20 +13,15 @@ func Ts(n int) []float64 {
     return ts
 }
 
-func floatRange(a, b int) []float64 {
-    xs := make([]float64, b-a)
-    for i := range xs {
-        xs[i] = float64(a + i)
-    }
-    return xs
-}
-
 func Spline(points []float64, n, m int, ts []float64) []float64 {
     const degree = 2
     if ((n * m) != len(points)) || (n <= degree) {
         return []float64{}
     }
-    knots := floatRange(0, n+degree+1)
+    knots := make([]float64, n+degree+1)
+    for i := range knots {
+        knots[i] = float64(i)
+    }
     domain := len(knots) - 1 - degree
     low := knots[degree]
     high := knots[domain]

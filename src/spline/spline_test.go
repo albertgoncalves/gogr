@@ -17,18 +17,6 @@ func compareArrays(xs, ys []float64) bool {
     return true
 }
 
-func TestFloatRange(t *testing.T) {
-    expected := []float64{0, 1, 2, 3, 4, 5}
-    result := floatRange(0, 6)
-    if !compareArrays(result, expected) {
-        t.Errorf(
-            "floatRange was incorrect, got: %v, wanted: %v",
-            result,
-            expected,
-        )
-    }
-}
-
 func TestTs(t *testing.T) {
     expected := []float64{
         0.0,
