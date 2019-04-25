@@ -5,6 +5,7 @@
 !src/
 !spline/
 !*.go
+!test/
 !test
 !pngs/
 !main.png
