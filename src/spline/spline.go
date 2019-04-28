@@ -22,9 +22,8 @@ func Spline(points []float64, n, m int, ts []float64) []float64 {
     for i := range knots {
         knots[i] = float64(i)
     }
-    domain := len(knots) - 1 - degree
     low := knots[degree]
-    high := knots[domain]
+    high := knots[n]
     vs := make([]float64, n*(m+1))
     for i := 0; i < n; i++ {
         for j := 0; j < (m + 1); j++ {
@@ -42,7 +41,7 @@ func Spline(points []float64, n, m int, ts []float64) []float64 {
             continue
         }
         s := 0
-        for i := degree; i < domain; i++ {
+        for i := degree; i < n; i++ {
             if (t >= knots[i]) && (t <= knots[i+1]) {
                 s = i
                 break
