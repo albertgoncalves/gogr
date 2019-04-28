@@ -121,7 +121,7 @@ func TestSplineFewPoints(t *testing.T) {
 }
 
 func BenchmarkSpline(b *testing.B) {
-    ts := []float64{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
+    ts := spline.Ts(1000)
     points := []float64{-1.0, 0.0, -0.5, 0.5, 0.5, -0.5, 1.0, 0.0}
     for i := 0; i < b.N; i++ {
         spline.Spline(points, 4, 2, ts)
