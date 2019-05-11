@@ -69,13 +69,13 @@ func main() {
             dc.Push()
             dc.Translate(x, y)
             dc.Scale(S/2, S/2)
-            n := rand.Intn(3) + 4
+            n := rand.Intn(4) + 6
             points := randomPoints(n)
             lineThruPoints(dc, drawLines, points)
             lineThruPoints(
                 dc,
                 drawCurve,
-                spline.Spline(points, n, 2, spline.Ts(M)),
+                spline.Spline(points, n, 2, 4, spline.Ts(M)),
             )
             dc.Pop()
         }

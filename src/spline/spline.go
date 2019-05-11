@@ -13,8 +13,7 @@ func Ts(n int) []float64 {
     return ts
 }
 
-func Spline(points []float64, n, m int, ts []float64) []float64 {
-    const degree = 2
+func Spline(points []float64, n, m int, degree int, ts []float64) []float64 {
     if ((n * m) != len(points)) || (n <= degree) {
         return []float64{}
     }
