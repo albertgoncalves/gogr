@@ -2,7 +2,7 @@
 with pkgs; mkShell {
     name = "Go";
     buildInputs = [
-        go_1_12
+        go
     ];
     shellHook = ''
         . .shellhook

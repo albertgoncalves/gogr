@@ -80,5 +80,5 @@ func main() {
             dc.Pop()
         }
     }
-    dc.SavePNG(fmt.Sprintf("%s/pngs/main.png", os.Getenv("GOPATH")))
+    dc.SavePNG(fmt.Sprintf("%s/out/main.png", os.Getenv("GOPATH")))
 }

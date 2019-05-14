@@ -2,8 +2,8 @@
 
 export GOPATH=$(pwd)
 
-if [ ! -d ./pngs/ ]; then
-    mkdir pngs
+if [ ! -d out/ ]; then
+    mkdir out
 fi
 
 find -maxdepth 4 -type d | grep "gg" >/dev/null
