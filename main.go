@@ -52,11 +52,11 @@ func randomPoints(n int) []float64 {
 }
 
 func main() {
-    rand.Seed(3)
+    rand.Seed(1)
     const (
         S = 256
-        W = 8
-        H = 8
+        W = 10
+        H = 4
         M = 100
     )
     dc := gg.NewContext(S*W, S*H)
