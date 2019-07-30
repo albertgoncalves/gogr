@@ -14,13 +14,12 @@ if [ ! -d out/ ]; then
     mkdir out
 fi
 
-
-if (( ! $(find . -maxdepth 4 -type d | grep "gg" >/dev/null) == 0 )); then
+if ! find . -maxdepth 4 -type d | grep "gg" >/dev/null; then
     go get -v github.com/fogleman/gg
 fi
 
 lint() {
-    if (( $(gofmt -w -s -e "$1") == 0 )); then
+    if gofmt -w -s -e "$1"; then
         awk '{ gsub(/\t/, "    "); print }' < "$1" > tmp
         cat tmp > "$1"
         rm tmp

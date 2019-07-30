@@ -1,6 +1,5 @@
-{ pkgs ? import <nixpkgs> {} }:
-with pkgs; mkShell {
-    name = "gogr";
+with import <nixpkgs> {};
+mkShell {
     buildInputs = [
         go
         shellcheck
