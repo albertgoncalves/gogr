@@ -3,7 +3,6 @@ package spline
 import (
     "math"
     "testing"
-    "spline"
 )
 
 func roundArray(xs []float64) {
@@ -38,7 +37,7 @@ func TestTs(t *testing.T) {
         0.9,
         1.0,
     }
-    result := spline.Ts(10)
+    result := Ts(10)
     if !compareArrays(result, expected) {
         t.Errorf(
             "TestTs\n"+
@@ -70,7 +69,7 @@ func TestSplineValid(t *testing.T) {
         0.64, -0.32,
         0.75, -0.25,
     }
-    result := spline.Spline(points, 4, 2, 2, ts)
+    result := Spline(points, 4, 2, 2, ts)
     roundArray(result)
     if !compareArrays(result, expected) {
         t.Errorf(
@@ -91,7 +90,7 @@ func TestSplineIncompletePoints(t *testing.T) {
         1.0,
     }
     expected := []float64{}
-    result := spline.Spline(points, 4, 2, 2, ts)
+    result := Spline(points, 4, 2, 2, ts)
     if !compareArrays(result, expected) {
         t.Errorf(
             "TestSplineIncompletePoints\n"+
@@ -109,7 +108,7 @@ func TestSplineFewPoints(t *testing.T) {
         -0.5, 0.5,
     }
     expected := []float64{}
-    result := spline.Spline(points, 2, 2, 2, ts)
+    result := Spline(points, 2, 2, 2, ts)
     if !compareArrays(result, expected) {
         t.Errorf(
             "TestSplineFewPoints\n"+
@@ -121,9 +120,9 @@ func TestSplineFewPoints(t *testing.T) {
 }
 
 func BenchmarkSpline(b *testing.B) {
-    ts := spline.Ts(1000)
+    ts := Ts(1000)
     points := []float64{-1.0, 0.0, -0.5, 0.5, 0.5, -0.5, 1.0, 0.0}
     for i := 0; i < b.N; i++ {
-        spline.Spline(points, 4, 2, 2, ts)
+        Spline(points, 4, 2, 2, ts)
     }
 }

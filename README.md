@@ -10,7 +10,7 @@ Quick start
 ---
 ```
 $ nix-shell
-[nix-shell:path/to/gogr]$ ./test src/test/
-[nix-shell:path/to/gogr]$ ./test src/test/ prof
-[nix-shell:path/to/gogr]$ go run main.go && open out/main.png
+[nix-shell:path/to/gogr]$ ./test spline
+[nix-shell:path/to/gogr]$ ./test spline prof
+[nix-shell:path/to/gogr]$ go build -o bin/main main.go && ./bin/main && open out/main.png
 ```

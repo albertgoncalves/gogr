@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
-cd $1
-if [[ $2 = prof ]]; then
-    go test -memprofile mem.prof -cpuprofile cpu.prof -bench .
+set -e
+
+package=$1
+flag=$2
+
+if [[ "$flag" = prof ]]; then
+    go test -memprofile mem.prof -cpuprofile cpu.prof "$package" -bench .
     go tool pprof --text cpu.prof | less
     go tool pprof --text mem.prof | less
+    rm mem.prof
+    rm cpu.prof
+    rm "$package.test"
 else
-    go test
+    go test "$package"
 fi

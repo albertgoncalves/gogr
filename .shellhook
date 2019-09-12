@@ -10,15 +10,19 @@ fi
 export GOPATH
 GOPATH=$(pwd)
 
-if [ ! -d out/ ]; then
-    mkdir out
-fi
+for f in "$GOPATH/out" "$GOPATH/bin"; do
+    if [ ! -d "$f" ]; then
+        mkdir "$f"
+    fi
+done
 
-if ! find . -maxdepth 4 -type d | grep "gg" >/dev/null; then
+if [ ! -f "$GOPATH/.init" ]; then
     go get -v github.com/fogleman/gg
+    go get -v golang.org/x/lint/golint
+    touch "$GOPATH/.init"
 fi
 
-lint() {
+gofmts() {
     if gofmt -w -s -e "$1"; then
         awk '{ gsub(/\t/, "    "); print }' < "$1" > tmp
         cat tmp > "$1"
@@ -26,4 +30,35 @@ lint() {
     fi
 }
 
-export -f lint
+golint() {
+    "$GOPATH/bin/golint" "$1" \
+        | sed -n -e '/exported .* should have comment.* or be unexported/!p'
+}
+
+goall() {
+    wd=$(pwd)
+    cd "$GOPATH" || exit
+    find . -type f -name '*.go' \
+        -not -path "*github.com*" \
+        -not -path "*golang.org*" \
+        -exec bash -c 'echo "$0"; golint "$0"; gofmts "$0"' {} \;
+    cd "$wd" || exit
+}
+
+govets() {
+    wd=$(pwd)
+    cd "$GOPATH/src" || exit
+    src=$(
+        find -- * -prune -type d \
+            -not -name "*github.com*" \
+            -not -name "*golang.org*" \
+            | tr '\r\n' ' '
+    )
+    eval "go vet -v $src"
+    cd "$wd" || exit
+}
+
+export -f gofmts
+export -f golint
+export -f goall
+export -f govets
